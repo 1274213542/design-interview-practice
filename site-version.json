@@ -1,0 +1,17 @@
+{
+  "updated_at": "2026-11-06 22:14 JST",
+  "files": {
+    "index.html": {
+      "bytes": 1196007,
+      "sha256": "fc6b72ff3563c8b24611f1c7064390c518ab422b26ea129f34958c136f47569a"
+    },
+    "archive.html": {
+      "bytes": 424341,
+      "sha256": "a7fdcd2e0535a9ba15a78bf61a1d86973f01945ce15d39f2dedc2da68417edef"
+    }
+  },
+  "questions": 22,
+  "followups": 51,
+  "archive_answers": 249,
+  "public_source_archive_questions": 249
+}
