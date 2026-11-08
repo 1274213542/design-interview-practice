@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-11-08 19:56 JST",
+  "updated_at": "2026-11-08 20:22 JST",
   "files": {
     "index.html": {
-      "bytes": 1462997,
-      "sha256": "b9b743f4bab761371f5a0c297895660bcbd9839fb93379caf881d4244398f42b"
+      "bytes": 1534813,
+      "sha256": "8f522e7a4c07ff644084226d855d582cf5d8532fec6a908a1c18059fb8db104c"
     },
     "archive.html": {
       "bytes": 424341,
@@ -11,7 +11,7 @@
     }
   },
   "questions": 59,
-  "followups": 130,
+  "followups": 131,
   "archive_answers": 249,
   "public_source_archive_questions": 249
 }
