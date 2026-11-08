@@ -1,17 +1,17 @@
 {
-  "updated_at": "2026-11-07 02:04 JST",
+  "updated_at": "2026-11-08 13:10 JST",
   "files": {
     "index.html": {
-      "bytes": 1243841,
-      "sha256": "edd9c9f3833cdfa45c793abde2d443e321e18495b1957fb7e8dedf46931689f8"
+      "bytes": 1253770,
+      "sha256": "9908a8e0a26b0d8c0609f56ea57ddf6ec79374013394e4d924d92a27f7d309e8"
     },
     "archive.html": {
       "bytes": 424341,
       "sha256": "a7fdcd2e0535a9ba15a78bf61a1d86973f01945ce15d39f2dedc2da68417edef"
     }
   },
-  "questions": 22,
-  "followups": 51,
+  "questions": 23,
+  "followups": 58,
   "archive_answers": 249,
   "public_source_archive_questions": 249
 }
