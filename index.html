@@ -674,7 +674,7 @@ function gpJapaneseTokens(line){
   if(opening)tokens.push({text:opening});
   return tokens.map(token=>token.space?esc(token.text):`<span class="gp-reading-token">${esc(token.text)}</span>`).join('');
 }
-const gpKanaHints=new Map([['加わる','くわわる'],['厄除け','やくよけ'],['何社','なんしゃ']]);
+const gpKanaHints=new Map([['加わる','くわわる'],['厄除け','やくよけ'],['何社','なんしゃ'],['満たせる','みたせる'],['車載','しゃさい'],['行ったり来たり','いったりきたり'],['努力家','どりょくか']]);
 const gpKanaPattern=new RegExp('('+[...gpKanaHints.keys()].join('|')+')','u');
 function gpJapaneseReading(value,prefix=''){
   return String(value||'').split('\n').map((line,i)=>{
