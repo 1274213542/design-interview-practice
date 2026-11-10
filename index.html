@@ -750,6 +750,7 @@ function gpJapaneseReading(value,prefix=''){
 
 let gpReading=null;
 const gpAudioBase='https://1274213542.github.io/kotoba-studio/integrations/goodpatch/';
+const gpAudioRepositoryBase='https://raw.githubusercontent.com/1274213542/kotoba-studio/main/integrations/goodpatch/';
 const gpAudioVersion=JSON.parse(document.getElementById('goodpatch-audio-source')?.textContent||'""');
 const gpClipId=/^[0-9a-f]{16,64}$/;
 let gpAudioIndex=null;
@@ -759,12 +760,20 @@ function gpLoadAudioIndex(refresh=false){
   if(gpNativeMini||!/^[0-9a-f]{64}$/.test(gpAudioVersion))return Promise.resolve(null);
   if(gpAudioIndex&&!refresh)return Promise.resolve(gpAudioIndex);
   if(gpAudioRequest)return gpAudioRequest;
-  gpAudioRequest=fetch(`${gpAudioBase}versions/${gpAudioVersion}.json`,{cache:'no-cache',credentials:'omit'})
-    .then(response=>response.ok?response.json():null)
-    .then(data=>{
-      if(data?.schemaVersion===1&&data.sourceSha256===gpAudioVersion&&data.entries)gpAudioIndex=data.entries;
-      return gpAudioIndex;
-    }).catch(()=>null).finally(()=>{gpAudioRequest=null});
+  gpAudioRequest=(async()=>{
+    for(const base of [gpAudioBase,gpAudioRepositoryBase]){
+      try{
+        const response=await fetch(`${base}versions/${gpAudioVersion}.json`,{cache:'no-cache',credentials:'omit'});
+        if(!response.ok)continue;
+        const data=await response.json();
+        if(data?.schemaVersion===1&&data.sourceSha256===gpAudioVersion&&data.entries){
+          gpAudioIndex={base,entries:data.entries};
+          break;
+        }
+      }catch{}
+    }
+    return gpAudioIndex;
+  })().finally(()=>{gpAudioRequest=null});
   return gpAudioRequest;
 }
 
@@ -831,7 +840,7 @@ function gpPlayNext(reading){
   };
   reading.audio.onended=()=>{if(isCurrent())gpPlayNext(reading)};
   reading.audio.onerror=fail;
-  reading.audio.src=`${gpAudioBase}clips/${part.clip}.mp3`;
+  reading.audio.src=`${reading.audioBase}clips/${part.clip}.mp3`;
   reading.audio.play().catch(fail);
 }
 
@@ -847,7 +856,7 @@ function gpStartReading(button){
     });
     return;
   }
-  const entry=gpAudioIndex[button.dataset.gpRead];
+  const entry=gpAudioIndex.entries[button.dataset.gpRead];
   const followup=button.closest('.gp-followup');
   const question=button.closest('.gp-question-block').querySelector('[lang="ja"]');
   const answerScope=followup||button.closest('.head');
@@ -861,7 +870,7 @@ function gpStartReading(button){
   const parts=[{target:question,clip:entry.q}];
   if(answer)parts.push({target:answer,clip:answerClip});
   gpReadStatus(button,'');
-  const reading={button,audio:new Audio(),parts,next:0,target:null,label:button.getAttribute('aria-label')};
+  const reading={button,audio:new Audio(),audioBase:gpAudioIndex.base,parts,next:0,target:null,label:button.getAttribute('aria-label')};
   gpReading=reading;
   button.textContent='■ 停止';
   button.setAttribute('aria-label','停止朗读');
